@@ -1,0 +1,149 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-10-01T00:00:00.000Z",
+  "__export_source": "insomnia.av2",
+  "resources": [
+    {
+      "_id": "wrk_av2_marketplace",
+      "name": "AV2 - Marketplace Enxuto",
+      "description": "",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_av2_marketplace",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000"
+      }
+    },
+
+    {
+      "_id": "req_health",
+      "parentId": "wrk_av2_marketplace",
+      "_type": "request",
+      "name": "GET /",
+      "method": "GET",
+      "url": "{{ _.base_url }}/",
+      "body": {},
+      "parameters": [],
+      "headers": []
+    },
+
+    {
+      "_id": "fld_stores",
+      "_type": "request_group",
+      "parentId": "wrk_av2_marketplace",
+      "name": "Stores"
+    },
+    {
+      "_id": "req_store_create",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "POST /stores (create)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/stores",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Loja do Roberto\",\n  \"userId\": 1\n}"
+      }
+    },
+    {
+      "_id": "req_store_list",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores (list)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/stores"
+    },
+    {
+      "_id": "req_store_get",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "GET /stores/:id (get by id)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/stores/1"
+    },
+    {
+      "_id": "req_store_update",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "PUT /stores/:id (update)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/stores/1",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Loja do Roberto (Atualizada)\"\n}"
+      }
+    },
+    {
+      "_id": "req_store_delete",
+      "parentId": "fld_stores",
+      "_type": "request",
+      "name": "DELETE /stores/:id (delete)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/stores/1"
+    },
+
+    {
+      "_id": "fld_products",
+      "_type": "request_group",
+      "parentId": "wrk_av2_marketplace",
+      "name": "Products"
+    },
+    {
+      "_id": "req_product_create",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "POST /products (create)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/products",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Camiseta\",\n  \"price\": 59.90,\n  \"storeId\": 1\n}"
+      }
+    },
+    {
+      "_id": "req_product_list",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products (list w/ store+user)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products"
+    },
+    {
+      "_id": "req_product_get",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "GET /products/:id (get by id)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products/1"
+    },
+    {
+      "_id": "req_product_update",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "PUT /products/:id (update)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/products/1",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"price\": 69.90\n}"
+      }
+    },
+    {
+      "_id": "req_product_delete",
+      "parentId": "fld_products",
+      "_type": "request",
+      "name": "DELETE /products/:id (delete)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/products/1"
+    }
+  ]
+}

@@ -1,56 +1,23 @@
-// Importar as bibliotecas necessárias
+// src/index.js
 import express from "express";
-import dotenv from "dotenv";
-import prisma from "./db.js"; // Importar nossa conexão com o banco
+import cors from "cors";
+import "dotenv/config";
 
-// Carregar variáveis de ambiente do arquivo .env
-dotenv.config();
+import storesRoutes from "./routes/stores.routes.js";
+import productsRoutes from "./routes/products.routes.js";
+import { errorHandler } from "./middlewares/error.js";
 
-// Criar aplicação Express
 const app = express();
-
-// Middleware para processar JSON nas requisições
+app.use(cors());
 app.use(express.json());
 
-//Healthcheck
-app.get("/", (_req, res) => res.json({ ok: true, service: "API 3º Bimestre" }));
+app.get("/", (req, res) => res.json({ ok: true, service: "Marketplace Enxuto API" }));
 
-//CREATE: POST /usuarios
-app.post("/usuarios", async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    const novoUsuario = await prisma.user.create({
-      data: { name, email, password }
-    });
+app.use("/stores", storesRoutes);
+app.use("/products", productsRoutes);
 
-    res.status(201).json(novoUsuario);
-  } catch (error) {
-    if (error.code === "P2002") {
-      return res.status(409).json({ error: "E-mail já cadastrado" });
-    }
-
-    res.status(500).json({ error: "Erro ao criar usuário" });
-  }
-});
-
-//READ: GET /usuarios
-app.get("/usuarios", async (_req, res) => {
-  try {
-    const usuarios = await prisma.user.findMany({
-      orderBy: { id: "asc" }
-    });
-    res.json(usuarios);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao listar usuários" });
-  }
-});
+// middleware de erro por último
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
-
-//ROTA DE TESTE
-app.get("/status", (req, res) => {
-  res.json({ message: "API Online" });
-});
+app.listen(PORT, () => console.log(`🚀 API ouvindo em http://localhost:${PORT}`));
